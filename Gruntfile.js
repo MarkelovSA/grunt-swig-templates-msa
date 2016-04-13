@@ -10,6 +10,17 @@
 
 module.exports = function(grunt) {
 
+  function attr(input, attrName, defaultValue) {
+    if (input === undefined) {
+      if (defaultValue === undefined) {
+        return '';
+      }
+      return attrName + '="' + defaultValue + '"';
+    }
+    return attrName + '="' + input + '"';
+  }
+  attr.safe = true;
+  
   // Project configuration.
   grunt.initConfig({
     jshint: {
@@ -34,16 +45,19 @@ module.exports = function(grunt) {
         options: {
         },
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
+          'tmp/default_options': ['test/fixtures/simple_text', 'test/fixtures/simple_template']
         }
       },
       custom_options: {
         options: {
-          separator: ': ',
-          punctuation: ' !!!'
+          extends: {
+            filters: {
+              attr:  attr
+            }
+          }
         },
         files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
+          'tmp/custom_options': ['test/fixtures/extends_filters']
         }
       }
     },
