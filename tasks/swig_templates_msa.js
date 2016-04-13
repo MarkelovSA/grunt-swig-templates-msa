@@ -8,6 +8,8 @@
 
 'use strict';
 
+var Swig = require('swig-templates');
+
 module.exports = function(grunt) {
 
   // Please see the Grunt documentation for more information regarding task
@@ -15,11 +17,19 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('swig_templates_msa', 'Grunt plugin for swig-templates.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
-
+    var
+    options = this.options({
+      separator: "\n",
+      opt: {}
+    }),
+    swig = new Swig.Swig(this.options.opt);
+    
+    if (options.extends) {
+        var filters = (options.extends.filters || {});
+        Object.keys(filters).forEach(function(name) {
+          this.setFilter(name, filters[name]);
+        }, swig);
+    }
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
       // Concat specified files.
@@ -33,18 +43,20 @@ module.exports = function(grunt) {
         }
       }).map(function(filepath) {
         // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
+        //return grunt.file.read(filepath);
+        return swig.renderFile(filepath);
+      })
+      .join(grunt.util.normalizelf(options.separator));
 
       // Handle options.
-      src += options.punctuation;
+      //src += options.punctuation;
 
       // Write the destination file.
       grunt.file.write(f.dest, src);
-
       // Print a success message.
       grunt.log.writeln('File "' + f.dest + '" created.');
     });
+
   });
 
 };
