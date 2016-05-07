@@ -59,7 +59,23 @@ module.exports = function(grunt) {
         files: {
           'tmp/custom_options': ['test/fixtures/extends_filters']
         }
-      }
+      },
+      loader_fs: {
+        options: {
+          loader: {
+            mod: 'fs',
+            basepath: __dirname + '/test/fixtures/',
+            encoding: "utf8"
+          }
+        },
+        files: [
+          {
+            cwd: 'test/fixtures/',
+            dest: 'tmp/loader_fs',
+            src: ['simple_text', 'simple_template']
+          }
+        ],
+      },
     },
 
     // Unit tests.

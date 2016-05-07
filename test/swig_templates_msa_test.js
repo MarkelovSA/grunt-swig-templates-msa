@@ -32,7 +32,7 @@ exports.swig_templates_msa = {
 
     var actual = grunt.file.read('tmp/default_options');
     var expected = grunt.file.read('test/expected/default_options');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
+    test.equal(actual, expected, '');
 
     test.done();
   },
@@ -41,7 +41,16 @@ exports.swig_templates_msa = {
 
     var actual = grunt.file.read('tmp/custom_options');
     var expected = grunt.file.read('test/expected/custom_options');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+    test.equal(actual, expected, '');
+
+    test.done();
+  },
+  loader_fs: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/loader_fs');
+    var expected = grunt.file.read('test/expected/default_options');
+    test.equal(actual, expected, 'the result should be equal "test/expected/default_options".');
 
     test.done();
   },
