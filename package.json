@@ -1,7 +1,7 @@
 {
   "name": "grunt-swig-templates-msa",
   "description": "Grunt plugin for swig-templates.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/MarkelovSA/grunt-swig-templates-msa",
   "author": {
     "name": "Markelov Stanislav",
